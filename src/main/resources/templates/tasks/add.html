@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Task</title>
+</head>
+<body>
+<h1>Add Task</h1>
+
+<form action="/tasks/add" method="post">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+    <br>
+
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description">
+    <br>
+
+    <label for="assignedTo">Assigned To:</label>
+    <input type="text" id="assignedTo" name="assignedTo">
+    <br>
+
+    <label for="isFavorite">Favorite:</label>
+    <input type="checkbox" id="isFavorite" name="isFavorite">
+    <br>
+
+    <button type="submit">Add Task</button>
+</form>
+
+<!-- Add navigation links or buttons as needed -->
+
+</body>
+</html>

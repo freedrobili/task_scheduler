@@ -18,27 +18,20 @@ data class Task(
     var assignedTo: String? = null,
     var createdBy: String = "",
     var isFavorite: Boolean = false,
-    @Enumerated(EnumType.STRING)
-    var state: TaskState = TaskState.PLANNED
-) : TaskStateHandler {
-    override fun start(task: Task) {
-        stateHandler.start(task)
+) {
+    // Инициализация начального состояния
+    var state: TaskState = PlannedState()
+
+    // Методы делегируются текущему состоянию
+    fun start() {
+        state.start(this)
     }
 
-    override fun complete(task: Task) {
-        stateHandler.complete(task)
+    fun complete() {
+        state.complete(this)
     }
 
-    override fun revert(task: Task) {
-        stateHandler.revert(task)
+    fun cancel() {
+        state.cancel(this)
     }
-
-    private val stateHandler: TaskStateHandler
-        get() {
-            return when (state) {
-                TaskState.PLANNED -> PlannedStateHandler
-                TaskState.IN_PROGRESS -> InProgressStateHandler
-                TaskState.COMPLETED -> CompletedStateHandler
-            }
-        }
 }

@@ -52,24 +52,25 @@ class TaskController(private val taskService: TaskService) {
         return "redirect:/tasks/createdByMe"
     }
 
-    @GetMapping("/start/{taskId}")
+    @PostMapping("/{taskId}/start")
     fun startTask(@PathVariable taskId: Long): String {
-        taskService.startTask(taskId)
+        val task = taskService.getTaskById(taskId)
+        taskService.startTask(task)
         return "redirect:/tasks/createdByMe"
     }
 
-    @GetMapping("/complete/{taskId}")
+    @PostMapping("/{taskId}/complete")
     fun completeTask(@PathVariable taskId: Long): String {
-        taskService.completeTask(taskId)
+        val task = taskService.getTaskById(taskId)
+        taskService.completeTask(task)
         return "redirect:/tasks/createdByMe"
     }
 
-    @GetMapping("/revert/{taskId}")
-    fun revertTask(@PathVariable taskId: Long): String {
-        taskService.revertTask(taskId)
+    @PostMapping("/{taskId}/cancel")
+    fun cancelTask(@PathVariable taskId: Long): String {
+        val task = taskService.getTaskById(taskId)
+        taskService.cancelTask(task)
         return "redirect:/tasks/createdByMe"
     }
 
-
-    // Другие методы для редактирования, удаления и других операций.
 }

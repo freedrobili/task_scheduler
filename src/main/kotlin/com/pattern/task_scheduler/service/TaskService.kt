@@ -22,28 +22,25 @@ class TaskService(private val taskRepository: TaskRepository) {
         return taskRepository.save(task)
     }
 
-    fun startTask(taskId: Long) {
-        val task = taskRepository.findById(taskId)
-        task.ifPresent {
-            it.start(it)
-            taskRepository.save(it)
-        }
+    fun startTask(task: Task) {
+        // Передать управление состоянием задачи
+        task.state.start(task)
+        taskRepository.save(task)
     }
 
-    fun completeTask(taskId: Long) {
-        val task = taskRepository.findById(taskId)
-        task.ifPresent {
-            it.complete(it)
-            taskRepository.save(it)
-        }
+    fun completeTask(task: Task) {
+        task.state.complete(task)
+        taskRepository.save(task)
     }
 
-    fun revertTask(taskId: Long) {
-        val task = taskRepository.findById(taskId)
-        task.ifPresent {
-            it.revert(it)
-            taskRepository.save(it)
-        }
+    fun cancelTask(task: Task) {
+        task.state.cancel(task)
+        taskRepository.save(task)
     }
-    // Другие методы, например, удаление задачи и другие операции.
+
+
+    fun getTaskById(taskId: Long): Task {
+        return taskRepository.findById(taskId)
+            .orElseThrow { NoSuchElementException("Task not found with ID: $taskId") }
+    }
 }
